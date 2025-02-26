@@ -22,6 +22,8 @@ Ao longo do documento, serão apresentados cenários comuns onde a aplicação d
 
 ## Entendendo o código
 
+Você pode encontrar e testar o código aqui: [agent_ocigenai.py](./source/agent_ocigenai.py)
+
 ### REST SERVICES
 
 Aqui estão os serviços definidos para as chamadas REST. Para o exemplo de buscar o endereço a partir do código postal, está sendo feito uma chamada para o OCI API Gateway que expõe uma integração construída no Oracle Integration para obter o endereço a partir de um microserviço no Oracle Kubernetes Engine (OKE).
