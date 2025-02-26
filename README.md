@@ -137,6 +137,12 @@ Existem vários cenários de integrações com múltiplas APIs REST e o uso de A
     - **Desafios:** Sistemas de IoT, sensores e distribuidoras de energia têm APIs diferentes e reguladas.
     - **Como o Agent AI ajuda:** Pode entender “Monitore o consumo da fábrica X e me avise se passar de 100 kWh” e configurar alertas automáticos.
 
+## References
+
+[About the Chat Models in Generative AI](https://docs.oracle.com/en-us/iaas/Content/generative-ai/chat-models.htm)
 
 
-https://docs.oracle.com/en-us/iaas/Content/generative-ai/chat-models.htm
+## Acknowledgments
+
+- **Author** - Cristiano Hoshikawa (Oracle LAD A-Team Solution Engineer)
+
