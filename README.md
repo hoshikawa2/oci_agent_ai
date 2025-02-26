@@ -139,6 +139,14 @@ Existem vários cenários de integrações com múltiplas APIs REST e o uso de A
     - **Desafios:** Sistemas de IoT, sensores e distribuidoras de energia têm APIs diferentes e reguladas.
     - **Como o Agent AI ajuda:** Pode entender “Monitore o consumo da fábrica X e me avise se passar de 100 kWh” e configurar alertas automáticos.
 
+## Conclusão
+
+A adoção de Agents de IA impulsionados por LLMs tem demonstrado um enorme potencial para otimizar a integração com sistemas legados. Ao interpretar comandos em linguagem natural e traduzir solicitações para chamadas precisas a APIs, esses agentes reduzem significativamente a complexidade da automação de processos empresariais.
+
+Os exemplos apresentados evidenciam como essa abordagem pode ser aplicada a diversos setores, desde finanças e logística até atendimento ao cliente e monitoramento de infraestrutura. A capacidade dos Agents de IA de adaptar-se dinamicamente a diferentes serviços e contextos proporciona um novo nível de flexibilidade e eficiência na transformação digital das empresas.
+
+Com a evolução contínua dos modelos de IA, espera-se que essas integrações se tornem ainda mais inteligentes, possibilitando interações cada vez mais naturais e precisas entre usuários e sistemas. O futuro da automação passa pela combinação de inteligência artificial e APIs, e os Agents de IA são a peça-chave para essa nova era da conectividade digital.
+
 ## References
 
 [About the Chat Models in Generative AI](https://docs.oracle.com/en-us/iaas/Content/generative-ai/chat-models.htm)
