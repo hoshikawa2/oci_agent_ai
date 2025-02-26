@@ -42,7 +42,7 @@ Perceba que em cada definição de serviço, é possível determinar um contexto
 
 ![img_2.png](images/img_2.png)
 
-Outro ponto interessante da biblioteca langchain.tools é que, os atributos da assinatura do serviço também são interpretados, ou seja, a própria biblioteca determina como repassar a solicitação em linguagem natural e definir os atributos dos parâmetros do serviço em questão. Isto por si só já muito impressionante, pois diminui muito a carga de implementação nas integrações. No modelo tradicional de integração, existe o tempo a ser gasto na definição do DE-PARA entre a origem e o destino destas integrações. É um esforço bem razoável. Já no modelo de Agent AI, é através do contexto que os atributos são passados, ou seja, a biblioteca consegue determinar o que é cada parâmetro e repassar ao serviço da forma correta.
+Outro ponto interessante da biblioteca langchain.tools é que, os atributos da assinatura do serviço também são interpretados, ou seja, a própria biblioteca determina como repassar a solicitação em linguagem natural e definir os atributos dos parâmetros do serviço em questão. Isto por si só já é muito impressionante, pois diminui muito a carga de implementação nas integrações. No modelo tradicional de integração, existe o tempo a ser gasto na definição do DE-PARA entre a origem e o destino destas integrações. É um esforço bem razoável. Já no modelo de Agent AI, é através do contexto que os atributos são passados, ou seja, a biblioteca consegue determinar o que é cada parâmetro e repassar ao serviço da forma correta.
 
 ![img_3.png](images/img_3.png)
 
