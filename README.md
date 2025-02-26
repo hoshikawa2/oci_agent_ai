@@ -24,6 +24,15 @@ Ao longo do documento, serão apresentados cenários comuns onde a aplicação d
 
 Você pode encontrar e testar o código aqui: [agent_ocigenai.py](./source/agent_ocigenai.py)
 
+**Definição de serviços**: O código define vários serviços, como insert_order, delete_order, search_order, order_cost e find_address. Esses serviços são decorados com o decorator @tool, que indica que eles podem ser chamados pelo agente conversacional.
+
+**Definição do modelo de linguagem**: O código utiliza o modelo de linguagem ChatOCIGenAI da Oracle Cloud Infrastructure (OCI) para gerar respostas às perguntas do usuário.
+
+**Definição do agente conversacional**: O código cria um agente conversacional utilizando a função create_tool_calling_agent da LangChain, passando como parâmetros o modelo de linguagem, os serviços definidos e um template de prompt.
+
+**Loop de conversa**: O código entra em um loop infinito, onde espera por entrada do usuário e processa as respostas utilizando o agente conversacional.
+
+
 ### REST SERVICES
 
 Aqui estão os serviços definidos para as chamadas REST. Para o exemplo de buscar o endereço a partir do código postal, está sendo feito uma chamada para o OCI API Gateway que expõe uma integração construída no Oracle Integration para obter o endereço a partir de um microserviço no Oracle Kubernetes Engine (OKE).
