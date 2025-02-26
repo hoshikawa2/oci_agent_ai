@@ -36,7 +36,7 @@ Aqui estão os serviços definidos para as chamadas REST. Para o exemplo de busc
 
 Ao implementar serviços de negócios, é possível expor estes serviços para que a Generative AI possa explorar melhor cada um deles. Isto é possível através de uma biblioteca chamada langchain.tools, o qual é capaz de interpretar um determinado contexto dado em linguagem natural e associar a um serviço de negócios específico.
 
-![img.png](img.png)
+![img.png](images/img.png)
 
 Perceba que em cada definição de serviço, é possível determinar um contexto específico para que, ao enviar uma solicitação em linguagem natural, a biblioteca possa interpretar o que foi pedido e determinar qual o serviço adequado deve ser executado.
 
