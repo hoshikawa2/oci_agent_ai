@@ -45,15 +45,17 @@ Aqui estão os serviços definidos para as chamadas REST. Para o exemplo de busc
 
 Ao implementar serviços de negócios, é possível expor estes serviços para que a Generative AI possa explorar melhor cada um deles. Isto é possível através de uma biblioteca chamada langchain.tools, o qual é capaz de interpretar um determinado contexto dado em linguagem natural e associar a um serviço de negócios específico.
 
-![img.png](images/img.png)
+![img_5.png](./images/img_5.png)
 
 Perceba que em cada definição de serviço, é possível determinar um contexto específico para que, ao enviar uma solicitação em linguagem natural, a biblioteca possa interpretar o que foi pedido e determinar qual o serviço adequado deve ser executado.
 
-![img_2.png](images/img_2.png)
+A biblioteca langchain.tools entende o escopo de trabalho ao associar os contextos e os serviços disponíveis para utilização. Isto é feito por conta da declaração abaixo:
 
-Outro ponto interessante da biblioteca langchain.tools é que, os atributos da assinatura do serviço também são interpretados, ou seja, a própria biblioteca determina como repassar a solicitação em linguagem natural e definir os atributos dos parâmetros do serviço em questão. Isto por si só já é muito impressionante, pois diminui muito a carga de implementação nas integrações. No modelo tradicional de integração, existe o tempo a ser gasto na definição do DE-PARA entre a origem e o destino destas integrações. É um esforço bem razoável. Já no modelo de Agent AI, é através do contexto que os atributos são passados, ou seja, a biblioteca consegue determinar o que é cada parâmetro e repassar ao serviço da forma correta.
+![img_4.png](./images/img_4.png)
 
-![img_3.png](images/img_3.png)
+Outro ponto interessante da biblioteca langchain.tools é que, os atributos da assinatura do serviço também são interpretados, ou seja, a própria biblioteca determina como repassar a solicitação em linguagem natural e definir os atributos dos parâmetros do serviço em questão. Isto por si só já muito impressionante, pois diminui muito a carga de implementação nas integrações. No modelo tradicional de integração, existe o tempo a ser gasto na definição do DE-PARA entre a origem e o destino destas integrações. É um esforço bem razoável. Já no modelo de Agent AI, é através do contexto que os atributos são passados, ou seja, a biblioteca consegue determinar o que é cada parâmetro e repassar ao serviço da forma correta.
+
+![img_3.png](./images/img_3.png)
 
 ### Cenários para Agent AI
 
