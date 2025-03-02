@@ -82,25 +82,25 @@ def order_cost():
 
 @tool
 def find_address(postalCode: str, number: str = "", complement: str = "") -> str:
-    """Find the complete address of a postal code to delivery, along with the building number and complement. The customer can ask for 'delivery to' or 'my address is'. postalCode normally is the postal code or CEP, number is the number of buiding and complenent is the apartment or other complement for the address. always confirm the address and the total cost of order."""
+    "Find the complete address of a postal code to delivery, along with the building number and complement. postalCode normally is the postal code or CEP, number is the number of buiding and complenent is the apartment or other complement for the address"
 
-    full_address = f"Avenida Paulista, 100 Sao Paulo SP 01310-000"
+    url = f"https://xxxxxxxxxxxxxxxxxxxxxxxxxx.apigateway.us-ashburn-1.oci.customer-oci.com/cep/cep?cep={postalCode}"
+    response = get_rest_service_auth(url)
+
+    address = response["frase"]
+    full_address = f"{address}, Number: {number}, Complement: {complement}"
     print(full_address)
     return str(full_address)
 
-tools = [insert_order, order_cost, search_order, find_address, delete_order]
-
 # @tool
 # def find_address(postalCode: str, number: str = "", complement: str = "") -> str:
-#     "Find the complete address of a postal code to delivery, along with the building number and complement. postalCode normally is the postal code or CEP, number is the number of buiding and complenent is the apartment or other complement for the address"
+#     """Find the complete address of a postal code to delivery, along with the building number and complement. The customer can ask for 'delivery to' or 'my address is'. postalCode normally is the postal code or CEP, number is the number of buiding and complenent is the apartment or other complement for the address. always confirm the address and the total cost of order."""
 #
-#     url = f"https://xxxxxxxxxxxxxxxxxxxxxxxxxx.apigateway.us-ashburn-1.oci.customer-oci.com/cep/cep?cep={postalCode}"
-#     response = get_rest_service_auth(url)
-#
-#     address = response["frase"]
-#     full_address = f"{address}, Number: {number}, Complement: {complement}"
+#     full_address = f"Avenida Paulista, 100 Sao Paulo SP 01310-000"
 #     print(full_address)
 #     return str(full_address)
+
+tools = [insert_order, order_cost, search_order, find_address, delete_order]
 
 #--------------------------------------------------------------------------
 # PROMPT AND CONTEXT
