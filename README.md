@@ -61,7 +61,7 @@ Another interesting point about the langchain.tools library is that the service 
 
 ![img.png](images/img_8.png)
 
-### Cenários para Agent AI
+### Scenarios for Agent AI
 
 There are several scenarios for integrations with multiple REST APIs and the use of AGENT AI. The complexities between mapping business information and available APIs are many. This is very common in several corporate business situations. Here are some examples where an AGENT AI can facilitate this task:
 
