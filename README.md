@@ -1,41 +1,41 @@
-# Agentes de IA: A Nova Ponte Entre APIs Legadas e a Inteligência de Negócios
+# AI Agents: The New Bridge Between Legacy APIs and Business Intelligence
 
-## Introdução
+## Introduction
 
-A utilização de modelos de Large Language Models (LLM) tem revolucionado a forma como interagimos com sistemas e processos de negócios. Com a capacidade de entender linguagem natural e integrar-se a serviços legados, esses modelos tornam as aplicações mais inteligentes e eficientes.
+The use of Large Language Models (LLM) has revolutionized the way we interact with systems and business processes. With the ability to understand natural language and integrate with legacy services, these models make applications more intelligent and efficient.
 
-Este material tem como objetivo demonstrar, por meio de um exemplo prático, como os conceitos de LLM podem ser aplicados para otimizar integrações com sistemas legados. A partir do uso de Agents de IA, é possível reduzir significativamente a complexidade de consumo de APIs, tornando a automação de processos mais flexível e acessível.
+This material aims to demonstrate, through a practical example, how LLM concepts can be applied to optimize integrations with legacy systems. By using AI Agents, it is possible to significantly reduce the complexity of API consumption, making process automation more flexible and accessible.
 
-Ao longo do documento, serão apresentados cenários comuns onde a aplicação de Agents de IA pode simplificar operações empresariais, reduzindo a necessidade de configurações manuais e facilitando a comunicação entre sistemas distintos.
+Throughout the document, common scenarios will be presented where the application of AI Agents can simplify business operations, reducing the need for manual configurations and facilitating communication between different systems.
 
-## Resumo
+## Summary
 
-- Utilizar modelos de LLM para entender processos de negócios e direcionar a execução para serviços legados
-- O entendimento é possível através da inclusão de contexto, o que facilita e acelera muito a construção de aplicações
-- Modelos LLM se utilizam de linguagem natural, inclusive traduzindo para várias outras línguas
+- Use LLM models to understand business processes and direct execution for legacy services
+- Understanding is possible through the inclusion of context, which greatly facilitates and speeds up the construction of applications
+- LLM models use natural language, including translation into several other languages
 
-## Observações
+## About the Demo
 
-- Apesar de simples, a demo a seguir mostrará como é uma construção de uma aplicação simples baseada em um legado
-- Quando existe um legado de APIs, a utilização Agents de IA permitem integrações poderosas
-- Aplicar conceitos de LLM em Agents de IA permitem muitas vezes resolver problemas complexos de consumo de APIs. Sem IA, uma API necessita de bastante trabalho para integração, pois envolve conhecer todos os atributos de entrada e saída
+- Although simple, the following demo will show how to build a simple application based on a legacy
+- When there is a legacy of APIs, the use of AI Agents allows for powerful integrations
+- Applying LLM concepts to AI Agents often allows for solving complex API consumption problems. Without AI, an API requires a lot of work for integration, as it involves knowing all the input and output attributes
 
-## Entendendo o código
+## Understand the code
 
-Você pode encontrar e testar o código aqui: [agent_ocigenai.py](./source/agent_ocigenai.py)
+You can find and test the code here: [agent_ocigenai.py](./source/agent_ocigenai.py)
 
-**Definição de serviços**: O código define vários serviços, como insert_order, delete_order, search_order, order_cost e find_address. Esses serviços são decorados com o decorator @tool, que indica que eles podem ser chamados pelo agente conversacional.
+**Service Definition**: The code defines several services, such as insert_order, delete_order, search_order, order_cost, and find_address. These services are decorated with the @tool decorator, which indicates that they can be called by the conversational agent.
 
-**Definição do modelo de linguagem**: O código utiliza o modelo de linguagem ChatOCIGenAI da Oracle Cloud Infrastructure (OCI) para gerar respostas às perguntas do usuário.
+**Language Model Definition**: The code uses the Oracle Cloud Infrastructure (OCI) ChatOCIGenAI language model to generate responses to user questions.
 
-**Definição do agente conversacional**: O código cria um agente conversacional utilizando a função create_tool_calling_agent da LangChain, passando como parâmetros o modelo de linguagem, os serviços definidos e um template de prompt.
+**Conversational Agent Definition**: The code creates a conversational agent using LangChain's create_tool_calling_agent function, passing as parameters the language model, the defined services and a prompt template.
 
-**Loop de conversa**: O código entra em um loop infinito, onde espera por entrada do usuário e processa as respostas utilizando o agente conversacional.
+**Conversational Loop**: The code enters an infinite loop, where it waits for user input and processes the responses using the conversational agent.
 
 
 ### REST SERVICES
 
-Aqui estão os serviços definidos para as chamadas REST. Para o exemplo de buscar o endereço a partir do código postal, está sendo feito uma chamada para o OCI API Gateway que expõe uma integração construída no Oracle Integration para obter o endereço a partir de um microserviço no Oracle Kubernetes Engine (OKE).
+Here are the services defined for the REST calls. For the example of fetching the address from the zip code, a call is being made to the OCI API Gateway which exposes an integration built in Oracle Integration to get the address from a microservice on Oracle Kubernetes Engine (OKE).
 
 ![img_1.png](images/img_1.png)
 
@@ -43,120 +43,125 @@ Aqui estão os serviços definidos para as chamadas REST. Para o exemplo de busc
 
 ### BUSINESS SERVICES
 
-Ao implementar serviços de negócios, é possível expor estes serviços para que a Generative AI possa explorar melhor cada um deles. Isto é possível através de uma biblioteca chamada langchain.tools, o qual é capaz de interpretar um determinado contexto dado em linguagem natural e associar a um serviço de negócios específico.
+When implementing business services, it is possible to expose these services so that Generative AI can better explore each of them. This is possible through a library called langchain.tools, which is capable of interpreting a given context in natural language and associating it with a specific business service. When declaring the services that will be part of the business logic, it is possible to declare "aliases" in the docstrings of each of them to help contextualize them.
 
-![img_5.png](./images/img_5.png)
+![img.png](images/img_7.png)
 
-Perceba que em cada definição de serviço, é possível determinar um contexto específico para que, ao enviar uma solicitação em linguagem natural, a biblioteca possa interpretar o que foi pedido e determinar qual o serviço adequado deve ser executado.
+As well as the context declaration is necessary in the prompt to use the AI model.
 
-A biblioteca langchain.tools entende o escopo de trabalho ao associar os contextos e os serviços disponíveis para utilização. Isto é feito por conta da declaração abaixo:
+![img.png](images/img_9.png)
 
-![img_4.png](./images/img_4.png)
+Note that in each service definition, it is possible to determine a specific context so that, when sending a request in natural language, the library can interpret what was requested and determine which appropriate service should be executed.
 
-Outro ponto interessante da biblioteca langchain.tools é que, os atributos da assinatura do serviço também são interpretados, ou seja, a própria biblioteca determina como repassar a solicitação em linguagem natural e definir os atributos dos parâmetros do serviço em questão. Isto por si só já muito impressionante, pois diminui muito a carga de implementação nas integrações. No modelo tradicional de integração, existe o tempo a ser gasto na definição do DE-PARA entre a origem e o destino destas integrações. É um esforço bem razoável. Já no modelo de Agent AI, é através do contexto que os atributos são passados, ou seja, a biblioteca consegue determinar o que é cada parâmetro e repassar ao serviço da forma correta.
+The langchain.tools library understands the scope of work by associating the contexts and services available for use. This is done by the following declaration:
 
-![img_3.png](./images/img_3.png)
+![img.png](images/img_6.png)
+
+Another interesting point about the langchain.tools library is that the service signature attributes are also interpreted, that is, the library itself determines how to forward the request in natural language and define the attributes of the parameters of the service in question. This is already very impressive in itself, as it greatly reduces the implementation burden on integrations. In the traditional integration model, there is time to be spent defining the FROM-TO between the source and destination of these integrations. This is a very reasonable effort. In the Agent AI model, it is through the context that the attributes are passed, that is, the library can determine what each parameter is and pass it to the service in the correct way.
+
+![img.png](images/img_8.png)
 
 ### Cenários para Agent AI
 
-Existem vários cenários de integrações com múltiplas APIs REST e o uso de AGENT AI. As complexidades entre os mapeamentos das informações de negócios e das APIs disponíveis são muitas. Isto é muito comum em várias situações de negócios corporativos. Aqui estão alguns exemplos onde um AGENT AI pode facilitar essa tarefa:
+There are several scenarios for integrations with multiple REST APIs and the use of AGENT AI. The complexities between mapping business information and available APIs are many. This is very common in several corporate business situations. Here are some examples where an AGENT AI can facilitate this task:
 
-1. **Automação de Processos Financeiros (ERP & Bancos)**
-    - **Cenário:** Empresas precisam se integrar a múltiplos bancos para obter extratos, gerar boletos, processar pagamentos e validar informações fiscais.
-    - **Desafios:** Cada banco tem sua própria API, com parâmetros específicos para pagamentos, PIX, transferências e reconciliação financeira.
-    - **Como o Agent AI ajuda:** Pode interpretar solicitações como “Pague a fatura do fornecedor X” e redirecionar para a API correta do banco com os parâmetros exigidos.
-
-
-2. **Gestão de Pedidos e Logística (E-commerce, ERP, WMS)**
-    - **Cenário:** Um e-commerce precisa orquestrar pedidos, atualizar estoques e solicitar transportadoras para diferentes tipos de entrega.
-    - **Desafios:** As APIs de transportadoras variam (Correios, FedEx, DHL, transportadoras locais), exigindo formatos de requisição específicos.
-    - **Como o Agent AI ajuda:** Pode traduzir pedidos como “Enviar este pedido via transportadora mais barata” e selecionar automaticamente o serviço certo.
+1. **Financial Process Automation (ERP & Banks)**
+   - **Scenario:** Companies need to integrate with multiple banks to obtain statements, generate payment slips, process payments and validate tax information.
+   - **Challenges:** Each bank has its own API, with specific parameters for payments, PIX, transfers and financial reconciliation.
+   - **How Agent AI helps:** It can interpret requests such as “Pay the invoice for supplier X” and redirect to the correct bank API with the required parameters.
 
 
-3. **Atendimento ao Cliente e Suporte Técnico (CRM & Helpdesk)**
-    - **Cenário:** Empresas que possuem CRMs como Siebel, Oracle CX, ServiceNow precisam integrar solicitações de clientes com diferentes APIs.
-    - **Desafios:** Cada sistema tem endpoints distintos para criar tickets, atualizar status, recuperar informações de clientes e rastrear histórico.
-    - **Como o Agent AI ajuda:** Pode entender solicitações como “Me mostre os últimos chamados do cliente X” e chamar a API correta do CRM.
+2. **Order Management and Logistics (E-commerce, ERP, WMS)**
+   - **Scenario:** An e-commerce needs to orchestrate orders, update inventories and request carriers for different types of delivery.
+   - **Challenges:** Carrier APIs vary (Post Office, FedEx, DHL, local carriers), requiring specific request formats.
+   - **How Agent AI helps:** It can translate requests like “Ship this order via the cheapest carrier” and automatically select the right service.
 
 
-4. **Integração de RH e Folha de Pagamento**
-    - **Cenário:** Sistemas de RH precisam sincronizar folhas de pagamento, benefícios e admissões com diferentes fornecedores e ERPs.
-    - **Desafios:** As APIs de benefícios, folha de pagamento e gestão de talentos possuem diferentes parâmetros e validações regulatórias.
-    - **Como o Agent AI ajuda:** Pode interpretar comandos como “Admitir novo funcionário na folha” e traduzir isso para chamadas adequadas nas APIs certas.
+3. **Customer Service & Helpdesk**
+   - **Scenario:** Companies with CRMs like Siebel, Oracle CX, ServiceNow need to integrate customer requests with different APIs.
+   - **Challenges:** Each system has different endpoints for creating tickets, updating statuses, retrieving customer information, and tracking history.
+   - **How Agent AI helps:** It can understand requests like “Show me the last calls from customer X” and call the correct CRM API.
 
 
-5. **Monitoramento de Infraestrutura e Segurança (SIEM & ITSM)**
-    - **Cenário:** Grandes empresas utilizam múltiplos sistemas de monitoramento (Splunk, Datadog, ServiceNow, Zabbix) para rastrear incidentes e anomalias.
-    - **Desafios:** Cada ferramenta tem uma API diferente para alertas, logs e respostas automatizadas.
-    - **Como o Agent AI ajuda:** Pode interpretar comandos como “Liste os últimos alertas críticos e abra um ticket no ServiceNow”.
+4. **HR and Payroll Integration**
+   - **Scenario:** HR systems need to synchronize payroll, benefits, and onboarding across multiple vendors and ERPs.
+   - **Challenges:** Benefits, payroll, and talent management APIs have different regulatory parameters and validations.
+   - **How Agent AI helps:** It can interpret commands like “Admit new employee to payroll” and translate that into appropriate calls to the right APIs.
 
 
-6. **Gestão de Contratos e Assinaturas Digitais**
-    - **Cenário:** Empresas utilizam serviços como DocuSign e Adobe Sign para gerenciar contratos e assinaturas.
-    - **Desafios:** Cada serviço tem requisitos diferentes para envio de documentos, validação de assinaturas e acompanhamento de status.
-    - **Como o Agent AI ajuda:** Pode receber uma solicitação como “Envie este contrato para assinatura do cliente X e me avise quando for assinado”, direcionando para a API correta.
+5. **Infrastructure and Security Monitoring (SIEM & ITSM)**
+   - **Scenario:** Large enterprises use multiple monitoring systems (Splunk, Datadog, ServiceNow, Zabbix) to track incidents and anomalies.
+   - **Challenges:** Each tool has a different API for alerts, logs, and automated responses.
+   - **How Agent AI helps:** It can interpret commands like “List the latest critical alerts and open a ticket in ServiceNow.”
 
 
-7. **Gestão de Saúde e Prontuário Eletrônico (HIS, PACS, LIS, ERP)**
-    - **Cenário:** Hospitais e clínicas utilizam sistemas diferentes para armazenar informações de pacientes, exames laboratoriais e imagens médicas.
-    - **Desafios:** APIs de sistemas como Tasy (Philips), MV, Epic e PACS (arquivos de imagem DICOM) possuem diferentes formatos de requisição.
-    - **Como o Agent AI ajuda:** Pode interpretar comandos como “Recupere o último exame de sangue do paciente João Silva e anexe ao prontuário”, chamando automaticamente as APIs certas.
+6. **Contract Management and Digital Signatures**
+   - **Scenario:** Companies use services like DocuSign and Adobe Sign to manage contracts and signatures.
+   - **Challenges:** Each service has different requirements for sending documents, validating signatures, and tracking status.
+   - **How Agent AI helps:** It might receive a request like “Send this contract to client X for signature and notify me when it’s signed,” and direct it to the correct API.
 
 
-8. **Telecomunicações (Suporte Técnico e Provisionamento de Serviços)**
-    - **Cenário:** Operadoras de telecomunicações oferecem serviços de telefonia, internet e TV, precisando integrar múltiplos sistemas de billing, CRM e monitoramento de rede.
-    - **Desafios:** Cada operação (ex.: abertura de chamados, alteração de planos, consulta de consumo) envolve APIs diferentes e específicas para cada serviço.
-    - **Como o Agent AI ajuda:** Pode entender “Quero aumentar minha franquia de internet para 500 MB” e acionar a API correta para upgrade de plano.
+7. **Healthcare Management and Electronic Medical Records (HIS, PACS, LIS, ERP)**
+   - **Scenario:** Hospitals and clinics use different systems to store patient information, lab tests, and medical images.
+   - **Challenges:** APIs from systems such as Tasy (Philips), MV, Epic, and PACS (DICOM image files) have different request formats.
+   - **How Agent AI helps:** It can interpret commands such as “Retrieve patient John Smith’s latest blood test and attach it to the medical record,” automatically calling the right APIs.
 
 
-9. **Automação de Seguros (Sinistros e Emissão de Apólices)**
-    - **Cenário:** Seguradoras precisam integrar APIs de cotação, emissão de apólices e abertura de sinistros.
-    - **Desafios:** Cada seguradora tem sua própria API, e os parâmetros variam dependendo do tipo de seguro (veículo, saúde, residencial).
-    - **Como o Agent AI ajuda:** Pode traduzir uma solicitação como “Registrar um sinistro para o carro do cliente Pedro Souza, com batida na lateral” em chamadas automáticas às APIs certas.
+8. **Telecommunications (Technical Support and Service Provisioning)**
+   - **Scenario:** Telecommunications operators offer telephone, internet and TV services, and need to integrate multiple billing, CRM and network monitoring systems.
+   - **Challenges:** Each operation (e.g.: opening calls, changing plans, checking consumption) involves different APIs specific to each service.
+   - **How Agent AI helps:** It can understand “I want to increase my internet allowance to 500 MB” and trigger the correct API to upgrade the plan.
 
 
-10. **Comércio Exterior e Desembaraço Aduaneiro**
-    - **Cenário:** Empresas que importam/exportam precisam lidar com APIs de Receita Federal, transportadoras internacionais e sistemas de controle alfandegário.
-    - **Desafios:** Cada país tem regras e formatos distintos para documentação (DU-E, DI, Invoice, Packing List).
-    - **Como o Agent AI ajuda:** Pode interpretar “Acompanhe a liberação da carga X no porto de Santos” e traduzir isso para requisições na API da Receita Federal e transportadoras.
+9. **Insurance Automation (Claims and Policy Issuance)**
+   - **Scenario:** Insurance companies need to integrate APIs for quoting, policy issuance, and claims.
+   - **Challenges:** Each insurance company has its own API, and the parameters vary depending on the type of insurance (vehicle, health, home).
+   - **How Agent AI helps:** It can translate a request like “Register a claim for customer Pedro Souza’s car, with a side impact” into automatic calls to the right APIs.
 
 
-11. **Gestão Hoteleira e Reservas Online**
-    - **Cenário:** Hotéis precisam se integrar a plataformas como Booking, Expedia e Airbnb para gerenciar reservas e disponibilidade de quartos.
-    - **Desafios:** Cada plataforma tem regras diferentes para cancelamentos, ajustes de tarifas e tempo de resposta.
-    - **Como o Agent AI ajuda:** Pode entender “Ajuste a tarifa para R$ 400 na sexta-feira e bloqueie reservas para segunda” e chamar as APIs corretas.
+10. **Foreign Trade and Customs Clearance**
+    - **Scenario:** Companies that import/export need to deal with IRS APIs, international carriers, and customs control systems.
+    - **Challenges:** Each country has different rules and formats for documentation (DU-E, DI, Invoice, Packing List).
+    - **How Agent AI helps:** It can interpret “Track the release of cargo X at the port of Santos” and translate this into requests in the IRS and carriers API.
 
 
-12. **Automação de Marketing e Campanhas Publicitárias**
-    - **Cenário:** Empresas utilizam ferramentas como Meta Ads, Google Ads, HubSpot e RD Station para campanhas digitais.
-    - **Desafios:** Criar campanhas, segmentar públicos e analisar métricas exige integração com múltiplas APIs.
-    - **Como o Agent AI ajuda:** Pode interpretar “Crie um anúncio no Facebook para o público de 25 a 40 anos interessado em tecnologia, com um orçamento de R$ 500” e configurar a campanha automaticamente.
+11. **Hotel Management and Online Booking**
+    - **Scenario:** Hotels need to integrate with platforms like Booking, Expedia, and Airbnb to manage reservations and room availability.
+    - **Challenges:** Each platform has different rules for cancellations, rate adjustments, and response times.
+    - **How Agent AI helps:** It can understand “Adjust the rate to R$400 on Friday and block reservations for Monday” and call the correct APIs.
 
 
-13. **Supply Chain e Gerenciamento de Estoques**
-    - **Cenário:** Grandes redes de varejo precisam monitorar estoques em tempo real e prever reposições automáticas.
-    - **Desafios:** Sistemas de ERP, WMS e fornecedores possuem APIs distintas para requisição de produtos e previsão de demanda.
-    - **Como o Agent AI ajuda:** Pode entender “Reponha o estoque do produto X quando atingir 10 unidades” e acionar as APIs certas.
+12. **Marketing Automation and Advertising Campaigns**
+    - **Scenario:** Companies use tools such as Meta Ads, Google Ads, HubSpot and RD Station for digital campaigns.
+    - **Challenges:** Creating campaigns, segmenting audiences and analyzing metrics requires integration with multiple APIs.
+    - **How Agent AI helps:** It can interpret “Create an ad on Facebook for the 25 to 40 year old audience interested in technology, with a budget of R$500” and configure the campaign automatically.
 
 
-14. **Integração de Chatbots e Atendimento Omnichannel**
-    - **Cenário:** Empresas oferecem suporte via WhatsApp, Telegram, e-mail e chatbot, precisando centralizar tudo no CRM.
-    - **Desafios:** Diferentes APIs para cada canal, com regras distintas para respostas automáticas e direcionamento.
-    - **Como o Agent AI ajuda:** Pode interpretar “Encaminhe esta dúvida sobre pagamento para um atendente humano” e redirecionar para o canal correto.
+13. **Supply Chain and Inventory Management**
+    - **Scenario:** Large retail chains need to monitor inventory in real time and predict automatic replenishment.
+    - **Challenges:** ERP, WMS, and supplier systems have separate APIs for product requisition and demand forecasting.
+    - **How Agent AI helps:** It can understand “Replenish product X when it reaches 10 units” and trigger the right APIs.
 
 
-15. **Gestão de Energia e IoT (Smart Grid)**
-    - **Cenário:** Empresas de energia elétrica utilizam APIs para medição de consumo, previsão de demanda e manutenção preventiva.
-    - **Desafios:** Sistemas de IoT, sensores e distribuidoras de energia têm APIs diferentes e reguladas.
-    - **Como o Agent AI ajuda:** Pode entender “Monitore o consumo da fábrica X e me avise se passar de 100 kWh” e configurar alertas automáticos.
+14. **Integration of Chatbots and Omnichannel Service**
+    - **Scenario:** Companies offer support via WhatsApp, Telegram, email and chatbot, needing to centralize everything in the CRM.
+    - **Challenges:** Different APIs for each channel, with different rules for automatic responses and routing.
+    - **How Agent AI helps:** It can interpret “Forward this payment question to a human attendant” and redirect to the correct channel.
 
-## Conclusão
 
-A adoção de Agents de IA impulsionados por LLMs tem demonstrado um enorme potencial para otimizar a integração com sistemas legados. Ao interpretar comandos em linguagem natural e traduzir solicitações para chamadas precisas a APIs, esses agentes reduzem significativamente a complexidade da automação de processos empresariais.
+15. **Energy Management and IoT (Smart Grid)**
+    - **Scenario:** Electric power companies use APIs to measure consumption, forecast demand and preventative maintenance.
+    - **Challenges:** IoT systems, sensors and energy distributors have different and regulated APIs.
+    - **How Agent AI helps:** It can understand “Monitor the consumption of factory X and notify me if it exceeds 100 kWh” and configure automatic alerts.
 
-Os exemplos apresentados evidenciam como essa abordagem pode ser aplicada a diversos setores, desde finanças e logística até atendimento ao cliente e monitoramento de infraestrutura. A capacidade dos Agents de IA de adaptar-se dinamicamente a diferentes serviços e contextos proporciona um novo nível de flexibilidade e eficiência na transformação digital das empresas.
 
-Com a evolução contínua dos modelos de IA, espera-se que essas integrações se tornem ainda mais inteligentes, possibilitando interações cada vez mais naturais e precisas entre usuários e sistemas. O futuro da automação passa pela combinação de inteligência artificial e APIs, e os Agents de IA são a peça-chave para essa nova era da conectividade digital.
+## Conclusions
+
+The adoption of AI Agents powered by LLMs has demonstrated enormous potential to streamline integration with legacy systems. By interpreting natural language commands and translating requests into accurate API calls, these agents significantly reduce the complexity of automating business processes.
+
+The examples presented here demonstrate how this approach can be applied to a variety of industries, from finance and logistics to customer service and infrastructure monitoring. The ability of AI agents to dynamically adapt to different services and contexts provides a new level of flexibility and efficiency in the digital transformation of companies.
+
+As AI models continue to evolve, these integrations are expected to become even more intelligent, enabling increasingly natural and accurate interactions between users and systems. The future of automation involves the combination of artificial intelligence and APIs, and AI Agents are the key to this new era of digital connectivity.
 
 ## References
 

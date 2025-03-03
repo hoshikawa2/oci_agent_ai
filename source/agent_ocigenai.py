@@ -10,7 +10,7 @@ from requests.auth import HTTPBasicAuth
 user_name = "#######################"
 password = "#######################"
 
-order_list = []  # Peristence for Order
+order_list = []  # Persistence for Order
 
 #--------------------------------------------------------------------------
 # REST SERVICES
@@ -45,59 +45,43 @@ def post_request(url, data, headers=None):
 
 @tool
 def insert_order(items):
-    """Create an order with items. The customer can ask for items of a restaurant. The customer want to include an item."""
+    """Create an order with items. The customer can ask for items from a restaurant. The customer wants to include an item."""
     global order_list
-    order_list.extend(items)  # Adiciona os novos itens ao pedido
-    print("Item(s) incluído(s):", items)
+    order_list.extend(items)  # Adds new items to the order
+    print("Item(s) added:", items)
     return {"message": "Items added to order", "current_order": order_list}
 
 @tool
 def delete_order(item):
-    """Delete an Item in the order. The customer can regret about one or more items.
-    The customer can ask for delete item of a restaurant.
-    The customer can request to 'Remove the item' or 'I don't want anymore the item' or 'Delete the item'."""
+    """Delete an item from the order. The customer may change their mind about one or more items.
+    The customer can request to delete an item from a restaurant order.
+    The customer may ask to 'Remove the item', 'I don't want the item anymore', or 'Delete the item'."""
     global order_list
     print("Trying to remove:", item)
     for global_item in order_list:
         if global_item in item:
             order_list.remove(global_item)
-            print("Item(s) excluído(s):", global_item)
-    return {"message": "Item excluded to order", "current_order": order_list}
+            print("Item(s) removed:", global_item)
+    return {"message": "Item removed from order", "current_order": order_list}
 
 @tool
 def search_order():
     """Search an order with items."""
     global order_list
-    print("Item(s) incluído(s):", order_list)
-    return {"message": "Items added to order", "current_order": order_list}
+    print("Current items in order:", order_list)
+    return {"message": "Current order details", "current_order": order_list}
 
 @tool
 def order_cost():
-    """This service gives the total of the order, summarizing the items.
-    If the customer says 'give me the bill' or 'summarize the order' or 'what is the total' or 'how much is it'."""
+    """This service provides the total cost of the order, summarizing the items.
+    If the customer asks 'give me the bill', 'summarize the order', 'what is the total', or 'how much is it'."""
     global order_list
     if not order_list:
         return {"message": "No items in the order"}
 
-    total = len(order_list) * 10  # Supondo que cada item custa 10
+    total = len(order_list) * 10  # Assuming each item costs 10
     print("Total: $", total)
     return {"total_cost": total, "order_items": order_list}
-
-# @tool
-# def delivery_address(postalCode: str, number: str = "", complement: str = "") -> str:
-#     """Find the complete address of a postal code to delivery, along with the building number and complement.
-#     The customer can ask for 'delivery to' or 'my address is'. postalCode normally is the postal code or CEP,
-#     number is the number of buiding and complenent is the apartment or other complement for the address. always confirm the address
-#     and the total cost of order."""
-#
-#     url = f"https://cihjkhlijtmunsiiokgrhetowu.apigateway.us-ashburn-1.oci.customer-oci.com/cep/cep?cep={postalCode}"
-#     response = get_rest_service_auth(url)
-#
-#     address = response["frase"]
-#     full_address = f"{address}, Number: {number}, Complement: {complement}"
-#     print(full_address)
-#     return str(full_address)
-
 
 @tool
 def delivery_address(postalCode: str, number: str = "", complement: str = "") -> str:
@@ -106,7 +90,11 @@ def delivery_address(postalCode: str, number: str = "", complement: str = "") ->
     number is the number of buiding and complenent is the apartment or other complement for the address. always confirm the address
     and the total cost of order."""
 
-    full_address = f"Avenida Paulista, 1000 - 01310-000 - São Paulo - SP"
+    url = f"https://cihjkhlijtmunsiiokgrhetowu.apigateway.us-ashburn-1.oci.customer-oci.com/cep/cep?cep={postalCode}"
+    response = get_rest_service_auth(url)
+
+    address = response["frase"]
+    full_address = f"{address}, Number: {number}, Complement: {complement}"
     print(full_address)
     return str(full_address)
 
@@ -119,11 +107,10 @@ tools = [insert_order, order_cost, search_order, delivery_address, delete_order]
 
 prompt = ChatPromptTemplate.from_messages(
     [
-        ("system", """Você é um assistente que ajuda clientes a fazer pedidos em um restaurante. 
-        Depois que o cliente adiciona um item ao pedido, sempre informe o total. 
-        Se o cliente fornecer um código postal (ou CEP), use a ferramenta find_address para obter o endereço completo. 
-        O cliente pode consultar a qualquer momento os items pedidos. o cliente pode solicitar a entrega no endereco 
-        dizendo 'me entregue no endereco ou no cep', 'meu endereço é e digitar o codigo postal ou cep ou rua'"""),
+        ("system", """You are an assistant that helps customers place orders at a restaurant.
+        After a customer adds an item to the order, always inform them of the total.
+        If the customer provides a postal code (ZIP), use the find_address tool to get the complete address.
+        The customer can check their order at any time. They may request delivery by saying 'deliver to' or 'my address is' followed by the postal code, ZIP code, or street name."""),
         ("placeholder", "{chat_history}"),
         ("human", "{input}"),
         ("placeholder", "{agent_scratchpad}"),
@@ -162,4 +149,3 @@ while (True):
         print(response)
     except:
         print("Invalid Command")
-
