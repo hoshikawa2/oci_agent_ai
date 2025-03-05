@@ -24,7 +24,9 @@ Throughout the document, common scenarios will be presented where the applicatio
 
 You can find and test the code here: [agent_ocigenai.py](./source/agent_ocigenai.py)
 
-**Service Definition**: The code defines several services, such as insert_order, delete_order, search_order, order_cost, and find_address. These services are decorated with the @tool decorator, which indicates that they can be called by the conversational agent.
+The code is divided in 4 modules:
+
+**Service Definition**: The code defines several services, such as insert_order, delete_order, search_order, order_cost, and delivery_address. These services are decorated with the @tool decorator, which indicates that they can be called by the conversational agent.
 
 **Language Model Definition**: The code uses the Oracle Cloud Infrastructure (OCI) ChatOCIGenAI language model to generate responses to user questions.
 
