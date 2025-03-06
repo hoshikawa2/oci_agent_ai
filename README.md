@@ -214,8 +214,8 @@ As AI models continue to evolve, these integrations are expected to become even 
 
 ## References
 
-[About the Chat Models in Generative AI](https://docs.oracle.com/en-us/iaas/Content/generative-ai/chat-models.htm)
-
+- [About the Chat Models in Generative AI](https://docs.oracle.com/en-us/iaas/Content/generative-ai/chat-models.htm)
+- [Installing the OCI-CLI](https://docs.oracle.com/en-us/iaas/Content/API/SDKDocs/cliinstall.htm)
 
 ## Acknowledgments
 
