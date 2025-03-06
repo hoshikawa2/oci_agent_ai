@@ -83,6 +83,22 @@ def order_cost():
     print("Total: $", total)
     return {"total_cost": total, "order_items": order_list}
 
+# @tool
+# def delivery_address(postalCode: str, number: str = "", complement: str = "") -> str:
+#     """Find the complete address of a postal code to delivery, along with the building number and complement.
+#     The customer can ask for 'delivery to' or 'my address is'. postalCode normally is the postal code or CEP,
+#     number is the number of buiding and complenent is the apartment or other complement for the address. always confirm the address
+#     and the total cost of order."""
+#
+#     url = f"https://xxxxxxxxxxxxxxxxxx.apigateway.us-ashburn-1.oci.customer-oci.com/cep/cep?cep={postalCode}"
+#     response = get_rest_service_auth(url)
+#
+#     address = response["frase"]
+#     full_address = f"{address}, Number: {number}, Complement: {complement}"
+#     print(full_address)
+#     return str(full_address)
+
+
 @tool
 def delivery_address(postalCode: str, number: str = "", complement: str = "") -> str:
     """Find the complete address of a postal code to delivery, along with the building number and complement.
@@ -90,11 +106,7 @@ def delivery_address(postalCode: str, number: str = "", complement: str = "") ->
     number is the number of buiding and complenent is the apartment or other complement for the address. always confirm the address
     and the total cost of order."""
 
-    url = f"https://cihjkhlijtmunsiiokgrhetowu.apigateway.us-ashburn-1.oci.customer-oci.com/cep/cep?cep={postalCode}"
-    response = get_rest_service_auth(url)
-
-    address = response["frase"]
-    full_address = f"{address}, Number: {number}, Complement: {complement}"
+    full_address = f"Paulista Avenue, 1000 - 01310-000 - Sao Paulo - SP"
     print(full_address)
     return str(full_address)
 
@@ -124,7 +136,7 @@ llm = ChatOCIGenAI(
     model_id="cohere.command-r-08-2024",
     service_endpoint="https://inference.generativeai.us-chicago-1.oci.oraclecloud.com",
     compartment_id="ocid1.compartment.oc1..aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-    auth_profile="LATINOAMERICA",  # replace with your profile name,
+    auth_profile="DEFAULT",  # replace with your profile name,
     model_kwargs={"temperature": 0.1, "top_p": 0.75, "max_tokens": 2000}
 )
 

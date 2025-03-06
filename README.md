@@ -1,4 +1,4 @@
-# AI Agents: The New Bridge Between Legacy APIs and Business Intelligence
+# Develop an Agent AI with Oracle Cloud Generative AI
 
 ## Introduction
 
@@ -61,9 +61,56 @@ The langchain.tools library understands the scope of work by associating the con
 
 Another interesting point about the langchain.tools library is that the service signature attributes are also interpreted, that is, the library itself determines how to forward the request in natural language and define the attributes of the parameters of the service in question. This is already very impressive in itself, as it greatly reduces the implementation burden on integrations. In the traditional integration model, there is time to be spent defining the FROM-TO between the source and destination of these integrations. This is a very reasonable effort. In the Agent AI model, it is through the context that the attributes are passed, that is, the library can determine what each parameter is and pass it to the service in the correct way.
 
+### Test the Code
+
+You can test and adjust the code for your purposes. The service named "delivery_address" was implemented calling a REST API. In this example, you can test the code change the real REST request to a fake request. To do this, comment the real code:
+
+![img_1.png](images/img_11.png)
+
+To comment the code, just put the "#" into the lines:
+
+![img_2.png](images/img_12.png)
+
+
+And discomment this code:
+
+![img_3.png](images/img_13.png)
+
+You can integrate you own API. Using the Oracle Cloud resources, you can use:
+
+- **Oracle Cloud API Gateway**
+- **Oracle Integration**
+- **Oracle Cloud Kubernetes Engine**
+- **Oracle Cloud Streaming**
+
+![img.png](images/img_16.png)
+
+And you can integrate with on-premises or other cloud resources.
+
+### Configure the code
+
+This python code needs some libraries. So you need to download the [requirements.txt](./source/requirements.txt) file. This file contains the libraries.
+Run this code to install the libraries in your terminal:
+
+    pip install -r requirements.txt
+
+You need to configure the OCI-CLI and link with your tenancy. You can install and configure following this material: [Installing the OCI-CLI](https://docs.oracle.com/en-us/iaas/Content/API/SDKDocs/cliinstall.htm)
+
+
+After install the libraries and the OCI-CLI, you need to configure a compartment to store your resources for the Generative AI. Please, change the compartment_id. Maintain the auth_profile with DEFAULT.
+
+![img_5.png](images/img_15.png)
+
+### Run the code
+
+You can run the code executing this command on your terminal:
+
+    python agent_ocigenai.py
+
 ![img.png](images/img_8.png)
 
-### Scenarios for Agent AI
+
+## Scenarios for Agent AI
 
 There are several scenarios for integrations with multiple REST APIs and the use of AGENT AI. The complexities between mapping business information and available APIs are many. This is very common in several corporate business situations. Here are some examples where an AGENT AI can facilitate this task:
 
