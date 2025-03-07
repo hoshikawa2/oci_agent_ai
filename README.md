@@ -1,4 +1,4 @@
-# Develop an Agent AI with Oracle Cloud Generative AI
+# Develop a simple AI Agent Tool using Oracle Cloud Generative AI and REST APIs
 
 ## Introduction
 
@@ -24,7 +24,9 @@ Throughout the document, common scenarios will be presented where the applicatio
 
 You can find and test the code here: [agent_ocigenai.py](./source/agent_ocigenai.py)
 
-The code is divided in 4 modules:
+The code is divided in 5 modules:
+
+**Simple Database Persistence Services**: The code define a creation of a simple database for an insert, delete, query and summarize the order.
 
 **Service Definition**: The code defines several services, such as insert_order, delete_order, search_order, order_cost, and delivery_address. These services are decorated with the @tool decorator, which indicates that they can be called by the conversational agent.
 
@@ -34,43 +36,47 @@ The code is divided in 4 modules:
 
 **Conversational Loop**: The code enters an infinite loop, where it waits for user input and processes the responses using the conversational agent.
 
+### Database Services
 
-### REST SERVICES
+Just to store the data into a simple database, this demo creates a SQLite3 database for persistence. These services will be used in the Business Services.
+
+![img.png](images/img_22.png)
+
+### REST Services
 
 Here are the services defined for the REST calls. For the example of fetching the address from the zip code, a call is being made to the OCI API Gateway which exposes an integration built in Oracle Integration to get the address from a microservice on Oracle Kubernetes Engine (OKE).
 
 ![img_1.png](images/img_1.png)
 
+### Business Services
 
+When implementing business services, it is possible to expose these services so that Generative AI can better explore each of them. This is possible through a library called langchain_core.tools, which is capable of interpreting a given context in natural language and associating it with a specific business service. When declaring the services that will be part of the business logic, it is possible to declare "aliases" in the docstrings of each of them to help contextualize them.
 
-### BUSINESS SERVICES
-
-When implementing business services, it is possible to expose these services so that Generative AI can better explore each of them. This is possible through a library called langchain.tools, which is capable of interpreting a given context in natural language and associating it with a specific business service. When declaring the services that will be part of the business logic, it is possible to declare "aliases" in the docstrings of each of them to help contextualize them.
-
-![img.png](images/img_7.png)
+![img.png](images/img_17.png)
 
 As well as the context declaration is necessary in the prompt to use the AI model.
 
-![img.png](images/img_9.png)
+![img_1.png](images/img_18.png)
 
 Note that in each service definition, it is possible to determine a specific context so that, when sending a request in natural language, the library can interpret what was requested and determine which appropriate service should be executed.
 
-The langchain.tools library understands the scope of work by associating the contexts and services available for use. This is done by the following declaration:
+The langchain_core.tools library understands the scope of work by associating the contexts and services available for use. This is done by the following declaration:
 
 ![img.png](images/img_6.png)
 
-Another interesting point about the langchain.tools library is that the service signature attributes are also interpreted, that is, the library itself determines how to forward the request in natural language and define the attributes of the parameters of the service in question. This is already very impressive in itself, as it greatly reduces the implementation burden on integrations. In the traditional integration model, there is time to be spent defining the FROM-TO between the source and destination of these integrations. This is a very reasonable effort. In the Agent AI model, it is through the context that the attributes are passed, that is, the library can determine what each parameter is and pass it to the service in the correct way.
+Another interesting point about the langchain_core.tools library is that the service signature attributes are also interpreted, that is, the library itself determines how to forward the request in natural language and define the attributes of the parameters of the service in question. This is already very impressive in itself, as it greatly reduces the implementation burden on integrations. In the traditional integration model, there is time to be spent defining the FROM-TO between the source and destination of these integrations. This is a very reasonable effort. In the Agent AI model, it is through the context that the attributes are passed, that is, the library can determine what each parameter is and pass it to the service in the correct way.
+
+![img.png](img.png)
 
 ### Test the Code
 
 You can test and adjust the code for your purposes. The service named "delivery_address" was implemented calling a REST API. In this example, you can test the code change the real REST request to a fake request. To do this, comment the real code:
 
-![img_1.png](images/img_11.png)
+![img_2.png](images/img_19.png)
 
 To comment the code, just put the "#" into the lines:
 
-![img_2.png](images/img_12.png)
-
+![img_3.png](images/img_20.png)
 
 And discomment this code:
 
@@ -107,65 +113,64 @@ You can run the code executing this command on your terminal:
 
     python agent_ocigenai.py
 
-![img.png](images/img_8.png)
-
+![img_4.png](images/img_21.png)
 
 ## Scenarios for Agent AI
 
 There are several scenarios for integrations with multiple REST APIs and the use of AGENT AI. The complexities between mapping business information and available APIs are many. This is very common in several corporate business situations. Here are some examples where an AGENT AI can facilitate this task:
 
 1. **Financial Process Automation (ERP & Banks)**
-   - **Scenario:** Companies need to integrate with multiple banks to obtain statements, generate payment slips, process payments and validate tax information.
-   - **Challenges:** Each bank has its own API, with specific parameters for payments, PIX, transfers and financial reconciliation.
-   - **How Agent AI helps:** It can interpret requests such as “Pay the invoice for supplier X” and redirect to the correct bank API with the required parameters.
+    - **Scenario:** Companies need to integrate with multiple banks to obtain statements, generate payment slips, process payments and validate tax information.
+    - **Challenges:** Each bank has its own API, with specific parameters for payments, PIX, transfers and financial reconciliation.
+    - **How Agent AI helps:** It can interpret requests such as “Pay the invoice for supplier X” and redirect to the correct bank API with the required parameters.
 
 
 2. **Order Management and Logistics (E-commerce, ERP, WMS)**
-   - **Scenario:** An e-commerce needs to orchestrate orders, update inventories and request carriers for different types of delivery.
-   - **Challenges:** Carrier APIs vary (Post Office, FedEx, DHL, local carriers), requiring specific request formats.
-   - **How Agent AI helps:** It can translate requests like “Ship this order via the cheapest carrier” and automatically select the right service.
+    - **Scenario:** An e-commerce needs to orchestrate orders, update inventories and request carriers for different types of delivery.
+    - **Challenges:** Carrier APIs vary (Post Office, FedEx, DHL, local carriers), requiring specific request formats.
+    - **How Agent AI helps:** It can translate requests like “Ship this order via the cheapest carrier” and automatically select the right service.
 
 
 3. **Customer Service & Helpdesk**
-   - **Scenario:** Companies with CRMs like Siebel, Oracle CX, ServiceNow need to integrate customer requests with different APIs.
-   - **Challenges:** Each system has different endpoints for creating tickets, updating statuses, retrieving customer information, and tracking history.
-   - **How Agent AI helps:** It can understand requests like “Show me the last calls from customer X” and call the correct CRM API.
+    - **Scenario:** Companies with CRMs like Siebel, Oracle CX, ServiceNow need to integrate customer requests with different APIs.
+    - **Challenges:** Each system has different endpoints for creating tickets, updating statuses, retrieving customer information, and tracking history.
+    - **How Agent AI helps:** It can understand requests like “Show me the last calls from customer X” and call the correct CRM API.
 
 
 4. **HR and Payroll Integration**
-   - **Scenario:** HR systems need to synchronize payroll, benefits, and onboarding across multiple vendors and ERPs.
-   - **Challenges:** Benefits, payroll, and talent management APIs have different regulatory parameters and validations.
-   - **How Agent AI helps:** It can interpret commands like “Admit new employee to payroll” and translate that into appropriate calls to the right APIs.
+    - **Scenario:** HR systems need to synchronize payroll, benefits, and onboarding across multiple vendors and ERPs.
+    - **Challenges:** Benefits, payroll, and talent management APIs have different regulatory parameters and validations.
+    - **How Agent AI helps:** It can interpret commands like “Admit new employee to payroll” and translate that into appropriate calls to the right APIs.
 
 
 5. **Infrastructure and Security Monitoring (SIEM & ITSM)**
-   - **Scenario:** Large enterprises use multiple monitoring systems (Splunk, Datadog, ServiceNow, Zabbix) to track incidents and anomalies.
-   - **Challenges:** Each tool has a different API for alerts, logs, and automated responses.
-   - **How Agent AI helps:** It can interpret commands like “List the latest critical alerts and open a ticket in ServiceNow.”
+    - **Scenario:** Large enterprises use multiple monitoring systems (Splunk, Datadog, ServiceNow, Zabbix) to track incidents and anomalies.
+    - **Challenges:** Each tool has a different API for alerts, logs, and automated responses.
+    - **How Agent AI helps:** It can interpret commands like “List the latest critical alerts and open a ticket in ServiceNow.”
 
 
 6. **Contract Management and Digital Signatures**
-   - **Scenario:** Companies use services like DocuSign and Adobe Sign to manage contracts and signatures.
-   - **Challenges:** Each service has different requirements for sending documents, validating signatures, and tracking status.
-   - **How Agent AI helps:** It might receive a request like “Send this contract to client X for signature and notify me when it’s signed,” and direct it to the correct API.
+    - **Scenario:** Companies use services like DocuSign and Adobe Sign to manage contracts and signatures.
+    - **Challenges:** Each service has different requirements for sending documents, validating signatures, and tracking status.
+    - **How Agent AI helps:** It might receive a request like “Send this contract to client X for signature and notify me when it’s signed,” and direct it to the correct API.
 
 
 7. **Healthcare Management and Electronic Medical Records (HIS, PACS, LIS, ERP)**
-   - **Scenario:** Hospitals and clinics use different systems to store patient information, lab tests, and medical images.
-   - **Challenges:** APIs from systems such as Tasy (Philips), MV, Epic, and PACS (DICOM image files) have different request formats.
-   - **How Agent AI helps:** It can interpret commands such as “Retrieve patient John Smith’s latest blood test and attach it to the medical record,” automatically calling the right APIs.
+    - **Scenario:** Hospitals and clinics use different systems to store patient information, lab tests, and medical images.
+    - **Challenges:** APIs from systems such as Tasy (Philips), MV, Epic, and PACS (DICOM image files) have different request formats.
+    - **How Agent AI helps:** It can interpret commands such as “Retrieve patient John Smith’s latest blood test and attach it to the medical record,” automatically calling the right APIs.
 
 
 8. **Telecommunications (Technical Support and Service Provisioning)**
-   - **Scenario:** Telecommunications operators offer telephone, internet and TV services, and need to integrate multiple billing, CRM and network monitoring systems.
-   - **Challenges:** Each operation (e.g.: opening calls, changing plans, checking consumption) involves different APIs specific to each service.
-   - **How Agent AI helps:** It can understand “I want to increase my internet allowance to 500 MB” and trigger the correct API to upgrade the plan.
+    - **Scenario:** Telecommunications operators offer telephone, internet and TV services, and need to integrate multiple billing, CRM and network monitoring systems.
+    - **Challenges:** Each operation (e.g.: opening calls, changing plans, checking consumption) involves different APIs specific to each service.
+    - **How Agent AI helps:** It can understand “I want to increase my internet allowance to 500 MB” and trigger the correct API to upgrade the plan.
 
 
 9. **Insurance Automation (Claims and Policy Issuance)**
-   - **Scenario:** Insurance companies need to integrate APIs for quoting, policy issuance, and claims.
-   - **Challenges:** Each insurance company has its own API, and the parameters vary depending on the type of insurance (vehicle, health, home).
-   - **How Agent AI helps:** It can translate a request like “Register a claim for customer Pedro Souza’s car, with a side impact” into automatic calls to the right APIs.
+    - **Scenario:** Insurance companies need to integrate APIs for quoting, policy issuance, and claims.
+    - **Challenges:** Each insurance company has its own API, and the parameters vary depending on the type of insurance (vehicle, health, home).
+    - **How Agent AI helps:** It can translate a request like “Register a claim for customer Pedro Souza’s car, with a side impact” into automatic calls to the right APIs.
 
 
 10. **Foreign Trade and Customs Clearance**
